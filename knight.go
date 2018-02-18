@@ -21,6 +21,7 @@ const (
 
 var (
 	sol[N][N] int
+	calls int
 )
 
 /* A utility function to check if i,j are valid indexes
@@ -34,11 +35,10 @@ func isSafe(x int,  y int, sol[N][N] int) bool {
 /* A utility function to print solution matrix sol[N][N] */
 func printSolution( sol[N][N] int) {
     for x := 0; x < N; x++ { 
-    
-        for y := 0; y < N; y++ {
-            fmt.Printf(" %2d ", sol[x][y]);
+         for y := 0; y < N; y++ {
+            fmt.Printf(" %2d ", sol[x][y])
         }
-        fmt.Printf("\n");
+        fmt.Printf("\n")
     }
 }
 
@@ -58,7 +58,7 @@ func solveKT() bool {
     /* Initialization of solution matrix */
     for x := 0; x < N; x++ {
         for y := 0; y < N; y++ {
-            sol[x][y] = -1;
+            sol[x][y] = -1
         }
     }
 
@@ -72,13 +72,14 @@ func solveKT() bool {
  
     // Since the Knight is initially at the first block
     sol[0][0] = 0;
-    //sol[7][7] = 37
+   	calls = 0	
    /* Start from 0,0 and explore all tours using
        solveKTUtil() */
     if (solveKTUtil(0, 0, 1, xMove, yMove) == false)   {
         fmt.Printf("Solution does not exist\n");
         return false
     }    else {
+    	fmt.Printf("solveKTUtil calls %d\n", calls)
         printSolution(sol)
     }
 
@@ -92,9 +93,10 @@ func solveKT() bool {
 func solveKTUtil(x int, y int, movei int ,xMove[] int, yMove[] int) bool {
    var  k, next_x, next_y int
 
-
+   //fmt.Printf("solveKTUtil move %d calls %d\n",movei, calls)
+   calls += 1
    if movei == N*N {
-   		fmt.Printf("when 64\n");
+   		fmt.Printf("when 64\n")
        	return true
    }
 
@@ -117,10 +119,44 @@ func solveKTUtil(x int, y int, movei int ,xMove[] int, yMove[] int) bool {
    return false
 }
 
+func mutate(j[]int) {
+	j[2] = 333
+}
+
+func mutate2(j[][]int) {
+	j[2][2] = 333
+}
+
+func xperiment() {
+
+  	var p[] int
+  	var s2d[][]int
+
+  	p = []int{1,2,3,4,5}
+  	mutate(p)
+  	for i:=0; i < 5; i++ {
+  		fmt.Printf("p %d\n",p[i])
+	}
+
+	s2d = [][]int{
+		[]int{1,2,3},
+		[]int{4,5,6},
+		[]int{7,8,9},
+	}
+	mutate2(s2d)
+    for x := 0; x < 3; x++ { 
+         for y := 0; y < 3; y++ {
+            fmt.Printf(" %2d ", s2d[x][y])
+        }
+        fmt.Printf("\n")
+    }
+
+
+}
  
 func main() {
   	fmt.Printf("Knight Tour Puzzle!\n")
-  	//sol[1][1] = -1
-	//printSolution(sol)
-	solveKT()
+  	xperiment()
+
+	//solveKT()
 }
