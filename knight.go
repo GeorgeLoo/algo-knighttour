@@ -20,20 +20,20 @@ const (
 )
 
 var (
-	sol[N][N] int
+	//sol[N][N] int
 	calls int
 )
 
 /* A utility function to check if i,j are valid indexes
    for N*N chessboard */
-func isSafe(x int,  y int, sol[N][N] int) bool {
+func isSafe(x int,  y int, sol[][] int) bool {
 	ret := ( x >= 0 && x < N && y >= 0 &&
           y < N && sol[x][y] == -1)
     return ret
 }
 
 /* A utility function to print solution matrix sol[N][N] */
-func printSolution( sol[N][N] int) {
+func printSolution( sol[][] int) {
     for x := 0; x < N; x++ { 
          for y := 0; y < N; y++ {
             fmt.Printf(" %2d ", sol[x][y])
@@ -54,6 +54,16 @@ func solveKT() bool {
 
 	//var xMove[8] int
 	//var yMove[8] int
+	sol := [][]int{
+		[]int{1,2,3,4,5,6,7,8},
+		[]int{1,2,3,4,5,6,7,8},
+		[]int{1,2,3,4,5,6,7,8},
+		[]int{1,2,3,4,5,6,7,8},
+		[]int{1,2,3,4,5,6,7,8},
+		[]int{1,2,3,4,5,6,7,8},
+		[]int{1,2,3,4,5,6,7,8},
+		[]int{1,2,3,4,5,6,7,8},
+	}		
 
     /* Initialization of solution matrix */
     for x := 0; x < N; x++ {
@@ -75,7 +85,7 @@ func solveKT() bool {
    	calls = 0	
    /* Start from 0,0 and explore all tours using
        solveKTUtil() */
-    if (solveKTUtil(0, 0, 1, xMove, yMove) == false)   {
+    if (solveKTUtil(0, 0, 1, sol, xMove, yMove) == false)   {
         fmt.Printf("Solution does not exist\n");
         return false
     }    else {
@@ -90,11 +100,12 @@ func solveKT() bool {
 /* A recursive utility function to solve Knight Tour
    problem */
 
-func solveKTUtil(x int, y int, movei int ,xMove[] int, yMove[] int) bool {
+func solveKTUtil(x int, y int, movei int, sol[][]int ,xMove[] int, yMove[] int) bool {
    var  k, next_x, next_y int
 
    //fmt.Printf("solveKTUtil move %d calls %d\n",movei, calls)
-   calls += 1
+   calls++
+   
    if movei == N*N {
    		fmt.Printf("when 64\n")
        	return true
@@ -108,7 +119,7 @@ func solveKTUtil(x int, y int, movei int ,xMove[] int, yMove[] int) bool {
        next_y = y + yMove[k]
        if isSafe(next_x, next_y, sol) {
          	sol[next_x][next_y] = movei
-         	if solveKTUtil(next_x, next_y, movei+1, xMove, yMove) == true {
+         	if solveKTUtil(next_x, next_y, movei+1, sol, xMove, yMove) == true {
              	return true
        		} else {
        			sol[next_x][next_y] = -1// backtracking
@@ -156,7 +167,7 @@ func xperiment() {
  
 func main() {
   	fmt.Printf("Knight Tour Puzzle!\n")
-  	xperiment()
+  	//xperiment()
 
-	//solveKT()
+	solveKT()
 }
